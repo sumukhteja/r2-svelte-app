@@ -57,54 +57,62 @@
   });
 </script>
 
-<main class="p-6 max-w-2xl mx-auto">
-  <h1 class="text-3xl font-bold mb-4">📝 UPSC Quiz</h1>
-  <p class="text-lg text-red-600 mb-4">Time Left: {formatTime(timeLeft)}</p>
-
-  {#each questions as q, i}
-    <div class="mb-6 p-4 border rounded shadow bg-white">
-      <p class="mb-2 font-medium">{i + 1}. {q.question}</p>
-      <img src={q.image} alt="Question image" class="w-full max-h-72 object-contain my-3 rounded" />
-      
-      {#each q.options as opt, j}
-        <div class="mt-1">
-          <label>
-            <input
-              type="radio"
-              name={q.id}
-              value={j}
-              on:change={() => answers[q.id] = j}
-              disabled={submitted}
-            />
-            {opt}
-          </label>
-        </div>
-      {/each}
-
-      {#if submitted}
-        <p class="mt-2 text-green-600">
-          ✅ Correct Answer: <strong>{q.options[q.correct]}</strong>
-        </p>
-        <p class="text-blue-700">
-          🧠 Your Answer: {q.options[answers[q.id]] || "Not answered"}
-        </p>
-      {/if}
+<main class="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 p-6 font-sans">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-6">
+      <h1 class="text-4xl font-extrabold text-blue-700 mb-2">📝 UPSC Quiz Challenge</h1>
+      <p class="text-lg text-gray-600">Test your knowledge with visuals and a timer</p>
+      <div class="mt-2 text-red-600 font-bold text-xl">⏳ {formatTime(timeLeft)}</div>
     </div>
-  {/each}
 
-  {#if !submitted}
-    <button
-      on:click={handleSubmit}
-      class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-    >
-      Submit
-    </button>
-  {/if}
+    {#each questions as q, i}
+      <div class="mb-6 bg-white rounded-xl shadow-lg p-5 border-l-4 border-blue-500">
+        <p class="text-lg font-semibold text-gray-800 mb-2">{i + 1}. {q.question}</p>
+        <img src={q.image} alt="Question image" class="w-full max-h-72 object-contain rounded-lg mb-4" />
+        <div class="grid gap-2">
+          {#each q.options as opt, j}
+            <label class="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-md cursor-pointer hover:bg-blue-100 transition">
+              <input
+                type="radio"
+                name={q.id}
+                value={j}
+                on:change={() => answers[q.id] = j}
+                disabled={submitted}
+                class="accent-blue-600"
+              />
+              <span class="text-gray-700">{opt}</span>
+            </label>
+          {/each}
+        </div>
+
+        {#if submitted}
+          <div class="mt-3 text-sm text-green-700">
+            ✅ Correct: <strong>{q.options[q.correct]}</strong>
+          </div>
+          <div class="text-sm text-blue-700">
+            🧠 You picked: {q.options[answers[q.id]] || "No answer"}
+          </div>
+        {/if}
+      </div>
+    {/each}
+
+    {#if !submitted}
+      <div class="text-center">
+        <button
+          on:click={handleSubmit}
+          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full shadow transition-all"
+        >
+          🚀 Submit Quiz
+        </button>
+      </div>
+    {/if}
+  </div>
 </main>
 
 <style>
   body {
-    font-family: sans-serif;
-    background-color: #f3f4f6;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f4f8;
   }
 </style>
