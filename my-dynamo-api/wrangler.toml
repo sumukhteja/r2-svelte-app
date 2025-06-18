@@ -1,5 +1,0 @@
-name = "my-dynamo-api" 
-main = "src/index.ts" 
-compatibility_date = "2025-06-18" 
-[vars] 
-AWS_REGION = "ap-south-1" 
