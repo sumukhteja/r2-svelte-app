@@ -27,22 +27,23 @@
   };
 
   const handleSubmit = async () => {
-    submitted = true;
+  submitted = true;
 
-    const response = {
-      id: "response-" + Date.now(),
-      subject: "Polity",
-      filename: "quiz-response.json",
-      userAnswers: answers,
-      submittedAt: new Date().toISOString()
-    };
-
-    await fetch("https://my-dynamo-api.sunny-vanamala4.workers.dev/upload", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(response)
-    });
+  const response = {
+    id: "response-" + Date.now(),
+    subject: "Polity",
+    filename: "quiz-response.json",
+    responses: answers, // ✅ this must match backend
+    submittedAt: new Date().toISOString()
   };
+
+  await fetch("https://my-dynamo-api.sunny-vanamala4.workers.dev/upload", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(response)
+  });
+};
+
 
   const formatTime = (s: number) => {
     const m = Math.floor(s / 60);
